@@ -1,0 +1,3 @@
+/home/main/code/qt-secl/buildclear/CMakeFiles/server.dir
+/home/main/code/qt-secl/buildclear/CMakeFiles/edit_cache.dir
+/home/main/code/qt-secl/buildclear/CMakeFiles/rebuild_cache.dir

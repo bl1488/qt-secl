@@ -1,0 +1,14 @@
+/home/main/code/qt-secl/build/CMakeFiles/server.dir
+/home/main/code/qt-secl/build/CMakeFiles/client.dir
+/home/main/code/qt-secl/build/CMakeFiles/edit_cache.dir
+/home/main/code/qt-secl/build/CMakeFiles/rebuild_cache.dir
+/home/main/code/qt-secl/build/src/gui/CMakeFiles/ModuleGui.dir
+/home/main/code/qt-secl/build/src/gui/CMakeFiles/edit_cache.dir
+/home/main/code/qt-secl/build/src/gui/CMakeFiles/rebuild_cache.dir
+/home/main/code/qt-secl/build/src/gui/CMakeFiles/ModuleGui_autogen_timestamp_deps.dir
+/home/main/code/qt-secl/build/src/gui/CMakeFiles/ModuleGui_autogen.dir
+/home/main/code/qt-secl/build/src/net/CMakeFiles/ModuleNet.dir
+/home/main/code/qt-secl/build/src/net/CMakeFiles/edit_cache.dir
+/home/main/code/qt-secl/build/src/net/CMakeFiles/rebuild_cache.dir
+/home/main/code/qt-secl/build/src/net/CMakeFiles/ModuleNet_autogen_timestamp_deps.dir
+/home/main/code/qt-secl/build/src/net/CMakeFiles/ModuleNet_autogen.dir
