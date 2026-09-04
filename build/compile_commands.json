@@ -31,6 +31,18 @@
 },
 {
   "directory": "/home/main/code/qt-secl/build",
+  "command": "/usr/bin/clang++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/main/code/qt-secl/build/src/gui/ModuleGui_autogen/include -I/home/main/code/qt-secl/src -I/home/main/code/qt-secl/libs -I/home/main/code/qt-secl/libs/spdlog -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -std=gnu++23 -g -Wall -Wextra -Wshadow -Wpedantic -Wdouble-promotion -Wunused-parameter -Wno-unused-private-field -fno-omit-frame-pointer -O0 -fPIC -o src/gui/CMakeFiles/ModuleGui.dir/client-sessions-widget.cpp.o -c /home/main/code/qt-secl/src/gui/client-sessions-widget.cpp",
+  "file": "/home/main/code/qt-secl/src/gui/client-sessions-widget.cpp",
+  "output": "src/gui/CMakeFiles/ModuleGui.dir/client-sessions-widget.cpp.o"
+},
+{
+  "directory": "/home/main/code/qt-secl/build",
+  "command": "/usr/bin/clang++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/main/code/qt-secl/build/src/gui/ModuleGui_autogen/include -I/home/main/code/qt-secl/src -I/home/main/code/qt-secl/libs -I/home/main/code/qt-secl/libs/spdlog -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -std=gnu++23 -g -Wall -Wextra -Wshadow -Wpedantic -Wdouble-promotion -Wunused-parameter -Wno-unused-private-field -fno-omit-frame-pointer -O0 -fPIC -o src/gui/CMakeFiles/ModuleGui.dir/logs-widget.cpp.o -c /home/main/code/qt-secl/src/gui/logs-widget.cpp",
+  "file": "/home/main/code/qt-secl/src/gui/logs-widget.cpp",
+  "output": "src/gui/CMakeFiles/ModuleGui.dir/logs-widget.cpp.o"
+},
+{
+  "directory": "/home/main/code/qt-secl/build",
   "command": "/usr/bin/clang++ -DQT_CORE_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -I/home/main/code/qt-secl/build/src/net/ModuleNet_autogen/include -I/home/main/code/qt-secl/src -I/home/main/code/qt-secl/libs/spdlog -I/home/main/code/qt-secl/libs -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -std=gnu++23 -g -Wall -Wextra -Wshadow -Wpedantic -Wdouble-promotion -Wunused-parameter -Wno-unused-private-field -fno-omit-frame-pointer -O0 -fPIC -o src/net/CMakeFiles/ModuleNet.dir/ModuleNet_autogen/mocs_compilation.cpp.o -c /home/main/code/qt-secl/build/src/net/ModuleNet_autogen/mocs_compilation.cpp",
   "file": "/home/main/code/qt-secl/build/src/net/ModuleNet_autogen/mocs_compilation.cpp",
   "output": "src/net/CMakeFiles/ModuleNet.dir/ModuleNet_autogen/mocs_compilation.cpp.o"

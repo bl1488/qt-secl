@@ -10,43 +10,24 @@
 
 namespace net {
 
-class Worker;
+////////////////////////////////////
 
-//
-// Server
-//
-class Server : public QTcpServer {
-   Q_OBJECT
-public:
-   explicit Server(int worker_count, QObject* parent = nullptr);
-
-   ~Server() { Stop(); }
-
-public:
-   bool Start(unsigned short port);
-   void Stop();
-
-   std::size_t GetWorkersCount() 
-      const noexcept { return worker_list_.size(); }
-
-   Worker* GetWorker(std::size_t index) 
-      const noexcept { return worker_list_.at(index); }
-
-   Worker* PeekWorker() const noexcept;
-
-protected:
-   void incomingConnection(qintptr handle) override;
-
-private:
-   QList<Worker*> worker_list_;
+struct ServerInfoData {
+   int         workers_count;
+   std::size_t total_clients_count;
+   // pair: worker index : clinets number
+   QList<QPair<int, std::size_t>> 
+               workers_list;
 };
 
-struct ClientInfo {
+struct ClientInfoData {
    QString       addr;
    std::uint64_t id;
    std::uint16_t port;
    bool          state;
 };
+
+////////////////////////////////////
 
 //
 // Worker
@@ -72,10 +53,10 @@ signals:
 
    // signals for obtaining info about client.
    // request
-   void RequestClientInfo(std::uint64_t id);
+   void RequestClientInfoById(std::uint64_t id);
    void RequestClientInfoAll();
    // answer
-   void ClientInfoReady(ClientInfo info);
+   void ClientInfoReady(ClientInfoData info);
 
 private slots:
    void DoWrite(std::uint64_t id, const QString& data);
@@ -93,8 +74,46 @@ private:
    std::uint16_t            worker_id_{};
 };
 
+//
+// Server
+//
+class Server : public QTcpServer {
+   Q_OBJECT
+public:
+   explicit Server(int worker_count, QObject* parent = nullptr);
+
+   ~Server() { Stop(); }
+
+public:
+   bool Start(unsigned short port);
+   void Stop();
+
+   std::size_t GetWorkersCount() 
+      const noexcept { return worker_list_.size(); }
+
+   std::size_t GetWorkerClientsCount(std::size_t index) const noexcept {
+      if (qsizetype(index) <= worker_list_.size())
+         return worker_list_[index]->GetClientCount();
+   }
+
+   Worker* PeekWorker() const noexcept;
+
+public slots:
+   void OnServerInfoRequest();
+signals:
+   void ServerInfoRequestReady(const ServerInfoData& info);
+
+protected:
+   void incomingConnection(qintptr handle) override;
+
+private:
+   QList<Worker*> worker_list_;
+};
+
+
 } // namespace net
 
-Q_DECLARE_METATYPE(net::ClientInfo);
+Q_DECLARE_METATYPE(net::ServerInfoData);
+Q_DECLARE_METATYPE(net::ClientInfoData);
 
 #endif // SERVER_H_

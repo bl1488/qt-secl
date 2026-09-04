@@ -162,6 +162,22 @@ build src/gui/CMakeFiles/ModuleGui.dir/table-node.cpp.o: CXX_COMPILER__ModuleGui
   OBJECT_DIR = src/gui/CMakeFiles/ModuleGui.dir
   OBJECT_FILE_DIR = src/gui/CMakeFiles/ModuleGui.dir
 
+build src/gui/CMakeFiles/ModuleGui.dir/client-sessions-widget.cpp.o: CXX_COMPILER__ModuleGui_unscanned_ /home/main/code/qt-secl/src/gui/client-sessions-widget.cpp || cmake_object_order_depends_target_ModuleGui
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = src/gui/CMakeFiles/ModuleGui.dir/client-sessions-widget.cpp.o.d
+  FLAGS = -std=gnu++23 -g -Wall -Wextra -Wshadow -Wpedantic -Wdouble-promotion -Wunused-parameter -Wno-unused-private-field -fno-omit-frame-pointer -O0 -fPIC
+  INCLUDES = -I/home/main/code/qt-secl/build/src/gui/ModuleGui_autogen/include -I/home/main/code/qt-secl/src -I/home/main/code/qt-secl/libs -I/home/main/code/qt-secl/libs/spdlog -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui
+  OBJECT_DIR = src/gui/CMakeFiles/ModuleGui.dir
+  OBJECT_FILE_DIR = src/gui/CMakeFiles/ModuleGui.dir
+
+build src/gui/CMakeFiles/ModuleGui.dir/logs-widget.cpp.o: CXX_COMPILER__ModuleGui_unscanned_ /home/main/code/qt-secl/src/gui/logs-widget.cpp || cmake_object_order_depends_target_ModuleGui
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = src/gui/CMakeFiles/ModuleGui.dir/logs-widget.cpp.o.d
+  FLAGS = -std=gnu++23 -g -Wall -Wextra -Wshadow -Wpedantic -Wdouble-promotion -Wunused-parameter -Wno-unused-private-field -fno-omit-frame-pointer -O0 -fPIC
+  INCLUDES = -I/home/main/code/qt-secl/build/src/gui/ModuleGui_autogen/include -I/home/main/code/qt-secl/src -I/home/main/code/qt-secl/libs -I/home/main/code/qt-secl/libs/spdlog -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui
+  OBJECT_DIR = src/gui/CMakeFiles/ModuleGui.dir
+  OBJECT_FILE_DIR = src/gui/CMakeFiles/ModuleGui.dir
+
 
 # =============================================================================
 # Link build statements for STATIC_LIBRARY target ModuleGui
@@ -170,7 +186,7 @@ build src/gui/CMakeFiles/ModuleGui.dir/table-node.cpp.o: CXX_COMPILER__ModuleGui
 #############################################
 # Link the static library src/gui/libModuleGui.a
 
-build src/gui/libModuleGui.a: CXX_STATIC_LIBRARY_LINKER__ModuleGui_ src/gui/CMakeFiles/ModuleGui.dir/ModuleGui_autogen/mocs_compilation.cpp.o src/gui/CMakeFiles/ModuleGui.dir/gui-main.cpp.o src/gui/CMakeFiles/ModuleGui.dir/table-node.cpp.o || src/gui/ModuleGui_autogen src/gui/ModuleGui_autogen_timestamp_deps src/net/libModuleNet.a
+build src/gui/libModuleGui.a: CXX_STATIC_LIBRARY_LINKER__ModuleGui_ src/gui/CMakeFiles/ModuleGui.dir/ModuleGui_autogen/mocs_compilation.cpp.o src/gui/CMakeFiles/ModuleGui.dir/gui-main.cpp.o src/gui/CMakeFiles/ModuleGui.dir/table-node.cpp.o src/gui/CMakeFiles/ModuleGui.dir/client-sessions-widget.cpp.o src/gui/CMakeFiles/ModuleGui.dir/logs-widget.cpp.o || src/gui/ModuleGui_autogen src/gui/ModuleGui_autogen_timestamp_deps src/net/libModuleNet.a
   OBJECT_DIR = src/gui/CMakeFiles/ModuleGui.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -226,7 +242,7 @@ build src/gui/ModuleGui_autogen/timestamp src/gui/ModuleGui_autogen/mocs_compila
 #############################################
 # Phony custom command for src/gui/CMakeFiles/ModuleGui_autogen_timestamp_deps
 
-build src/gui/CMakeFiles/ModuleGui_autogen_timestamp_deps | ${cmake_ninja_workdir}src/gui/CMakeFiles/ModuleGui_autogen_timestamp_deps: phony src/net/libModuleNet.a /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2 /usr/lib/qt6/libexec/uic /usr/lib/qt6/libexec/moc || src/net/ModuleNet_autogen src/net/ModuleNet_autogen_timestamp_deps src/net/libModuleNet.a
+build src/gui/CMakeFiles/ModuleGui_autogen_timestamp_deps | ${cmake_ninja_workdir}src/gui/CMakeFiles/ModuleGui_autogen_timestamp_deps: phony /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2 /usr/lib/qt6/libexec/uic src/net/libModuleNet.a /usr/lib/qt6/libexec/moc || src/net/ModuleNet_autogen src/net/ModuleNet_autogen_timestamp_deps src/net/libModuleNet.a
 
 
 #############################################

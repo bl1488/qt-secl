@@ -9,11 +9,7 @@
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv) {
    QApplication qapp(argc, argv);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-   qRegisterMetaType<net::ClientInfo>();
-#endif
-
-   net::Server server(4);
+   net::Server server(5);
    if (!server.Start(net::global::PORT)) {
       GlobalLogError("server start failed");
       return 0;

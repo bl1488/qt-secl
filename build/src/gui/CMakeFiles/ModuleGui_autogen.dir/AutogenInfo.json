@@ -166,9 +166,21 @@
 	"HEADERS" : 
 	[
 		[
+			"/home/main/code/qt-secl/src/gui/client-sessions-widget.h",
+			"MU",
+			"EWIEGA46WW/moc_client-sessions-widget.cpp",
+			null
+		],
+		[
 			"/home/main/code/qt-secl/src/gui/gui-main.h",
 			"MU",
 			"EWIEGA46WW/moc_gui-main.cpp",
+			null
+		],
+		[
+			"/home/main/code/qt-secl/src/gui/logs-widget.h",
+			"MU",
+			"EWIEGA46WW/moc_logs-widget.cpp",
 			null
 		],
 		[
@@ -247,7 +259,13 @@
 	"SETTINGS_FILE" : "/home/main/code/qt-secl/build/src/gui/CMakeFiles/ModuleGui_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[
+			"/home/main/code/qt-secl/src/gui/client-sessions-widget.cpp",
+			"MU",
+			null
+		],
 		[ "/home/main/code/qt-secl/src/gui/gui-main.cpp", "MU", null ],
+		[ "/home/main/code/qt-secl/src/gui/logs-widget.cpp", "MU", null ],
 		[ "/home/main/code/qt-secl/src/gui/table-node.cpp", "MU", null ]
 	],
 	"UIC_OPTIONS" : [],

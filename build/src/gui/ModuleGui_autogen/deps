@@ -1,8 +1,12 @@
 ModuleGui_autogen/timestamp: \
 	/home/main/code/qt-secl/build/src/gui/ModuleGui_autogen/moc_predefs.h \
 	/home/main/code/qt-secl/src/gui/CMakeLists.txt \
+	/home/main/code/qt-secl/src/gui/client-sessions-widget.cpp \
+	/home/main/code/qt-secl/src/gui/client-sessions-widget.h \
 	/home/main/code/qt-secl/src/gui/gui-main.cpp \
 	/home/main/code/qt-secl/src/gui/gui-main.h \
+	/home/main/code/qt-secl/src/gui/logs-widget.cpp \
+	/home/main/code/qt-secl/src/gui/logs-widget.h \
 	/home/main/code/qt-secl/src/gui/table-node.cpp \
 	/home/main/code/qt-secl/src/gui/table-node.h \
 	/home/main/code/qt-secl/src/net/server.h \
@@ -407,11 +411,13 @@ ModuleGui_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtNetwork/qtnetworkexports.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtNetwork/qtnetworkglobal.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QFrame \
+	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QGroupBox \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMainWindow \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QPushButton \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QWidget \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractbutton.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qframe.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qgroupbox.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qmainwindow.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qpushbutton.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qsizepolicy.h \
