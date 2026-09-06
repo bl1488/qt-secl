@@ -1,7 +1,6 @@
 #ifndef TABLE_NODE_H_
 #define TABLE_NODE_H_
 
-#include <QWidget>
 #include <QFrame>
 #include <QPushButton>
 

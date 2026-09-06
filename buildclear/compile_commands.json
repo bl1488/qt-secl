@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/main/code/qt-secl/buildclear",
-  "command": "/usr/bin/clang++ -std=gnu++20 -g -Wall -Wextra -Wshadow -Wpedantic -Wdouble-promotion -Wunused-parameter -Wno-unused-private-field -fno-omit-frame-pointer -O0 -o CMakeFiles/server.dir/src/server-main.cpp.o -c /home/main/code/qt-secl/src/server-main.cpp",
-  "file": "/home/main/code/qt-secl/src/server-main.cpp",
-  "output": "CMakeFiles/server.dir/src/server-main.cpp.o"
-}
-]

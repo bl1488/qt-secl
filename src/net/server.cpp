@@ -28,7 +28,6 @@ net::Server::Server(int worker_count, QObject* parent) :
       worker->moveToThread(thread);
 
       connect(thread, &QThread::finished, worker, &QThread::deleteLater);
-
       thread->start();
       
       worker_list_.append(worker);
@@ -79,6 +78,17 @@ void net::Server::Stop() {
    GlobalLogInfo("server is stopped");
 }
 
+void net::Server::OnServerInfoRequest() {
+   ServerInfoData info{};
+   info.workers_count = GetWorkersCount();
+   for (int i = 0; i < worker_list_.size(); ++i) {
+      std::size_t count = worker_list_[i]->GetClientCount();
+      info.total_clients_count += count;
+      info.workers_list.append({ i + 1, count });
+   }
+   emit ServerInfoRequestReady(info);
+}
+
 //
 // Worker
 //
@@ -107,7 +117,7 @@ void net::Worker::DoClientInfoRequest(std::uint64_t id) {
       return;
    }
 
-   ClientInfo info;
+   net::ClientInfoData info;
    info.addr  = socket->peerAddress().toString();
    info.state = (socket->state() == QAbstractSocket::ConnectedState);
    info.id    = id;
@@ -144,11 +154,12 @@ void net::Worker::DoAddClient(qintptr handle) {
       worker_id_, 
       id, 
       socket->peerAddress().toString().toStdString(), 
-      socket->peerPort());
+      socket->peerPort()
+   );
 }
 
 std::uint64_t net::Worker::GenerateClientId() const noexcept {
-   // generate id with xoshiro256
+   // generate with xoshiro256
    return utils::Random<std::uint64_t>();
 }
 
