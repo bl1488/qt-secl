@@ -6,6 +6,13 @@
 
 class QStackedLayout;
 class QLabel;
+class QLayout;
+
+namespace net {
+
+struct ClientInfoData;
+
+} // namespace net
 
 namespace gui {
 
@@ -16,6 +23,13 @@ class StatePushButton : public QPushButton {
    Q_OBJECT
 public:
    explicit StatePushButton(QWidget* parent = nullptr);
+
+public: 
+   bool GetState() const noexcept { return state_; }
+
+signals:
+   // out signal
+   void Clicked(bool state);
 
 private:
    void UpdateStyle();
@@ -32,10 +46,20 @@ class ActiveTableNodeData : public QWidget {
 public:
    explicit ActiveTableNodeData(QWidget* parent = nullptr);
 
+public:
+   // update labels info
+   void Update(const net::ClientInfoData& info);
+
 private:
-   QLabel* label_addr_{};
-   QLabel* label_id_{};
-   QLabel* label_status{};
+   // init horizontal layout with labels:
+   // [labelt_session_id_] [label_state_]
+   QLayout* InitBottomLayout();
+   // init layout with settings, logs, start/stop buttons
+   QLayout* InitButtons(QLayout* main_layout);
+
+private:
+   QLabel* label_session_id_;
+   QLabel* label_state_;
 };
 
 //
@@ -44,23 +68,19 @@ private:
 class TableNode : public QFrame {
    Q_OBJECT
 public:
-   // state false -> inactive
-   // state true  -> active
    explicit TableNode(bool state, QWidget *parent = nullptr);
 
 public:
+   // active/inactive
    void SetNodeState(bool new_state) noexcept;
-
+   // recall to active_node_->Update()
+   void UpdateActiveNodeData(const net::ClientInfoData& info);
+   
 private:
-   void DrawNodeData();
-
-private:
-   QStackedLayout* 
-           main_layout_{};
-   ActiveTableNodeData* 
-           active_node_{};
-   QLabel* inactive_node_{};
-   bool    state_{};
+   QStackedLayout*      main_layout_;
+   ActiveTableNodeData* active_node_;
+   QLabel*              inactive_node_;
+   bool                 state_ = false;
 };
 
 } // namespace gui

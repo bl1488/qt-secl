@@ -7,8 +7,10 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 add_library(ModuleGui STATIC EXCLUDE_FROM_ALL
    gui-main.cpp
    table-node.cpp
-   client-sessions-widget.cpp
-   logs-widget.cpp)
+   sessions-widget.cpp
+   logs-widget.cpp
+   bottom-panel.cpp
+   event-bus.cpp)
 
 target_link_libraries(ModuleGui PUBLIC ModuleNet Qt6::Widgets)
 

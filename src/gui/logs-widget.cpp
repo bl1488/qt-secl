@@ -1,29 +1,104 @@
 #include "gui/logs-widget.h"
+#include "gui/gui-common.h"
+
+#include "net/server.h"
+#include "net/packet.h"
+#include "net/worker.h"
+#include "net/net-common.h"
+
 #include "include/spdlog-wrapper.h"
 
 #include <QTextEdit>
+#include <QJsonObject>
+#include <QJsonDocument>
 #include <QGroupBox>
 #include <QVBoxLayout>
+#include <QLabel>
+#include <QComboBox>
+#include <QPushButton>
 
 gui::LogsWidget::LogsWidget(QWidget* parent) : 
-   QWidget(parent) 
+   QGroupBox(parent) 
 {
-   auto* widget     = new QWidget();
-   auto* layout     = new QVBoxLayout(widget);
+   auto* layout   = new QVBoxLayout(this);
 
-   auto* box        = new QGroupBox("logs", widget);
-   auto* box_layout = new QVBoxLayout(box);
-   auto* text       = new QTextEdit(box);
+   message_types_ = new QComboBox();
+   text_          = new QTextEdit();
+   session_info_  = new QLabel("empty");
 
-   text->setReadOnly(true);
+   connect(this, &LogsWidget::Update, this, &LogsWidget::OnUpdate);
 
-   box->setAlignment(Qt::AlignHCenter);
+   // text
+   text_->setReadOnly(true);
+   text_->setStyleSheet(QString(
+      "QTextEdit {"
+      "  border: 1px solid %1"
+      "}"
+   ).arg(global::BORDER_COLOR_HEX));
 
-   box_layout->addWidget(text);
-   box_layout->setContentsMargins(0, 0, 0, 0);
+   // sessions info
+   session_info_->setStyleSheet(QString(
+      "QLabel {"
+      "  background-color: #363636;"
+      "  border-radius: 3px;"
+      "  border: 1px solid %1;"
+      "}"
+   ).arg(gui::global::BORDER_COLOR_HEX));
 
-   layout->setContentsMargins(5, 5, 5, 5);
-   layout->addWidget(box);
+   // top layout
+   auto* top_layout   = new QHBoxLayout();
 
-   GlobalLogDebug("{} init", __func__);
+   auto* clear_button = new QPushButton("clear");
+   // clear text widget
+   connect(clear_button, &QPushButton::clicked, this, [this] {
+      text_->clear();
+   });
+
+   message_types_->addItems({ 
+      "network metrics", "device status", "log"
+   });
+
+   top_layout->addWidget(new QLabel("message type"));
+   top_layout->addWidget(message_types_, 1, Qt::AlignLeft);
+   top_layout->addWidget(clear_button);
+
+   // adding widgets
+   layout->addLayout(top_layout);
+   layout->addWidget(session_info_);
+   layout->addWidget(text_);
+
+   this->setLayout(layout);
+   this->setObjectName("MainLogsWidget");
+   this->setStyleSheet(QString(
+      "#MainLogsWidget {"
+      "  border: 1px solid %1;"
+      "}"
+   ).arg(global::BORDER_COLOR_HEX));
+
+   GlobalLogDebug("initialized: {}()", __func__);
+}
+
+void gui::LogsWidget::OnUpdate(
+   const net::ClientInfoData& info, 
+   std::uint16_t              type, 
+   const QJsonObject&         payload)
+{
+   session_info_->setText(QString(
+      "id:\t%1\n"
+      "addr:\t%2:%3\n"
+      "status:\t%4\n"
+   )
+   .arg(info.id)
+   .arg(net::ValidateAddrString(QHostAddress(info.addr)))
+   .arg(info.port)
+   .arg(info.state));
+
+   QByteArray data = QJsonDocument(payload).toJson(QJsonDocument::Indented);
+   text_->append(QString(
+      "type:%1\n"
+      "payload:\n%2\n"
+      "====================================\n"
+   )
+   .arg(net::Packet::TypeToString(type))
+   .arg(data));
 }

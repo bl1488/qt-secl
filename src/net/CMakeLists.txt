@@ -6,7 +6,9 @@ find_package(Qt6 REQUIRED COMPONENTS Network)
 
 add_library(ModuleNet STATIC EXCLUDE_FROM_ALL 
    server.cpp
-   client.cpp)
+   client.cpp
+   worker.cpp
+   packet.cpp)
 
 target_include_directories(ModuleNet PUBLIC 
    ${CMAKE_SOURCE_DIR}/src
