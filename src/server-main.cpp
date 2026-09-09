@@ -1,15 +1,18 @@
 #include "net/net-common.h"
 #include "net/server.h"
+
 #include "gui/gui-main.h"
+
 #include "include/spdlog-wrapper.h"
 
 #include <QApplication>
-#include <QtGlobal>
+#include <QJsonObject>
+#include <QJsonDocument>
 
-int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv) {
+int main(int argc, char** argv) {
    QApplication qapp(argc, argv);
 
-   net::Server server(5);
+   net::Server server(2);
    if (!server.Start(net::global::PORT)) {
       GlobalLogError("server start failed");
       return 0;

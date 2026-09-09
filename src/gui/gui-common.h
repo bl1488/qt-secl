@@ -3,7 +3,6 @@
 
 #include <QString>
 #include <QFileInfo>
-#include <QColor>
 
 namespace gui {
 
@@ -13,6 +12,7 @@ inline QString GetFileAbsolutePath(const QString& additional) {
 
 namespace global {
 
+// general border color
 constexpr const char* BORDER_COLOR_HEX = "#4b4b4b";
 
 } // namespace gui::global

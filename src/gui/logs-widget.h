@@ -2,22 +2,48 @@
 #define LOGS_WIDGET_H_
 
 #include <QWidget>
+#include <QGroupBox>
+
+class QComboBox;
+class QTextEdit;
+class QJsonObject;
+class QLabel;
+
+namespace net {
+
+struct ClientInfoData;
+
+} // namespace net
 
 namespace gui {
 
 //
 // LogsWidget
 //
-class LogsWidget : public QWidget {
+class LogsWidget : public QGroupBox {
    Q_OBJECT
 public:
-   LogsWidget(QWidget* parent = nullptr);
+   explicit LogsWidget(QWidget* parent = nullptr);
 
-public:
-   QWidget* GetMainWidget() const noexcept { return main_widget_; }
+signals:
+   void Update(
+      const net::ClientInfoData& info, 
+      std::uint16_t              type, 
+      const QJsonObject&         payload
+   );
+private slots:
+   void OnUpdate(
+      const net::ClientInfoData& info, 
+      std::uint16_t              type, 
+      const QJsonObject&         payload
+   );
 
 private:
-   QWidget* main_widget_{};
+   QComboBox* message_types_;
+   QTextEdit* text_;
+   QLabel*    session_info_;
+
+   int current_worker_index_ = 0;
 };
 
 } // namespace gui
