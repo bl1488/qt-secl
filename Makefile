@@ -1,6 +1,6 @@
 CXX_COMPILER     = clang++
 BUILD_DIR        = build
-BUILD_TYPE      ?= DEBUG
+BUILD_TYPE      ?= RELEASE
 SERVER_PROJ_NAME = server
 CLIENT_PROJ_NAME = client
 
