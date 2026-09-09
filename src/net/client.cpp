@@ -76,7 +76,7 @@ QByteArray net::Sender::GenerateLog() {
    // random log message
    QString message;
    for (int i = 0; i < log_size; ++i)
-      message.append(words[utils::Random<int>(0, words_size)]).append(" ");
+      message.append(words[utils::Random<int>(0, words_size - 1)]).append(" ");
 
    QJsonObject json;
    json["type"]     = "Log";
