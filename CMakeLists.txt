@@ -34,13 +34,13 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
                           -flto=auto
                           -march=native
                           -fomit-frame-pointer)
-      add_link_options(-flto=auto -fuse-ld=lld)
+      add_link_options(-flto=auto)
    # profiler
    elseif (BUILD_TYPE STREQUAL "PROFILE")
       add_compile_options(-O3
                           -flto=auto
                           -march=native)
-      add_link_options(-flto=auto -fuse-ld=lld)
+      add_link_options(-flto=auto)
    # sanitizers build
    # using: ASan, UBSan, UAFSan
    elseif (BUILD_TYPE STREQUAL "SAN")
