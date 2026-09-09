@@ -29,9 +29,9 @@ public:
       return worker_list_.size(); 
    }
 
-   std::size_t GetWorkerClientsCount(std::size_t index) const noexcept;
+   std::size_t GetWorkerSessionsCount(std::size_t index) const noexcept;
 
-   const Worker* GetWorker(int index) const noexcept {
+   Worker* GetWorker(int index) const noexcept {
       return worker_list_.value(index);
    }
 

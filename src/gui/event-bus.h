@@ -13,7 +13,7 @@ namespace net {
 class Worker;
 class Server;
 
-};
+} // namespace net
 
 namespace gui::details {
 
@@ -34,11 +34,19 @@ public:
    void Init(net::Server& server_wrapper);
 
 signals:
-   // table-node.h
-   void ToggleClientSender(bool state, std::uint64_t id);
-   void ShowTableNodeLogs(std::uint64_t id);
-   void ConfigureSession(std::uint64_t id);
+   // table node buttons
+   // start/stop
+   void ToggleClientSender (int worker_index, std::uint64_t id, bool state);
+   // logs
+   void ShowTableNodeLogs  (int worker_index, std::uint64_t id);
+   // settings
+   void ConfigureSession   (int worker_index, std::uint64_t id);
 
+   // proxy for server
+   void RequestServerInfo();
+   void ServerInfoReady(const net::ServerInfoData& info);
+
+   // proxy for worker
    void Write(
       int               worker_index, 
       std::uint64_t     sessions_id, 
@@ -46,17 +54,28 @@ signals:
       const QByteArray& payload
    );
 
-   void RequestServerInfo();
-   void ServerInfoReady(const net::ServerInfoData& info);
-
    void RequestWorkerSnapshot(int worker_index);
    void WorkerSnapshotReady(
       int worker_index, 
       const QList<net::ClientInfoData>& list
    );
+   
+
+   // global worker state.
+   // some widgets require the current worker index
+   void WorkerIndexChanged(int worker_index);
+
+   // arise from worker.
+   // logs-widget connecting to this signal
+   void GlobalLogStream(
+      int                        worker_index, 
+      const net::ClientInfoData& info,
+      std::uint16_t              type, 
+      const QJsonObject&         payload
+   );
 
 public:
-   int GetWorkersCount()                          const noexcept;
+   int GetWorkersCount() const noexcept;
    std::size_t GetSessionsCount(int worker_index) const noexcept;
 
 private:

@@ -7,6 +7,8 @@
 class QStackedLayout;
 class QLabel;
 class QLayout;
+class QGraphicsOpacityEffect;
+class QPropertyAnimation;
 
 namespace net {
 
@@ -15,6 +17,25 @@ struct ClientInfoData;
 } // namespace net
 
 namespace gui {
+
+//
+// SettingsPopup
+//
+class SettingsPopup : public QWidget {
+   Q_OBJECT
+public:
+   explicit SettingsPopup(QWidget* parent, const QString &text);
+
+public:
+   void Popup(int delay = 2000);
+
+private slots:
+   void HideAnimated();
+
+private:
+   QGraphicsOpacityEffect* effect_;
+   QPropertyAnimation*     animation_;
+};
 
 //
 // StatePushButton
@@ -26,6 +47,10 @@ public:
 
 public: 
    bool GetState() const noexcept { return state_; }
+   
+   bool SetState(bool new_state) noexcept { 
+      return state_ = new_state; 
+   }
 
 signals:
    // out signal
@@ -58,8 +83,11 @@ private:
    QLayout* InitButtons(QLayout* main_layout);
 
 private:
-   QLabel* label_session_id_;
-   QLabel* label_state_;
+   QLabel*          label_session_id_;
+   QLabel*          label_state_;
+   StatePushButton* start_stop_button_;
+
+   int current_worker_index_ = 0;
 };
 
 //

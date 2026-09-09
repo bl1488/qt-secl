@@ -98,6 +98,20 @@ net::Worker::Worker(std::uint16_t worker_id, QObject* parent) :
       &Worker::OnRequestSessionsSnapshot
    );
 
+   connect(this, &Worker::SetCurrentActiveSession, this,
+   [this](std::uint64_t id) {
+      if (id == current_active_session_) 
+         return;
+      else if (sessions_list_.contains(id)) {
+         current_active_session_ = id;
+         GlobalLogDebug("worker {}: current active session changed: {}", worker_id_, id);
+      }
+      else {
+         GlobalLogDebug("worker {}: no session {} at list. active session = {}", 
+            worker_id_, id, current_active_session_);
+      }
+   });
+
    GlobalLogInfo("worker {} initialized", worker_id_);
 }
 
@@ -146,8 +160,11 @@ void net::Worker::OnAddSession(qintptr handle) {
       emit ClientDisconnected(info);
    });
 
+   // recv
    connect(client, &SessionWrapper::DataReceivedReady, this, 
    [this](const ClientInfoData& info, std::uint16_t type, const QJsonObject& payload) {
+      if (current_active_session_ == info.id) 
+         emit ActiveSessionLogReady(worker_id_ - 1, info, type, payload);
       emit DataReceivedReady(info, type, payload);
    });
 

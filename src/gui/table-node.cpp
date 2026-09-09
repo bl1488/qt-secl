@@ -12,6 +12,86 @@
 #include <QVBoxLayout>
 #include <QStackedLayout>
 #include <QGridLayout>
+#include <QTimer>
+#include <QGraphicsOpacityEffect>
+#include <QPropertyAnimation>
+
+//
+// SettingsPopup
+//
+gui::SettingsPopup::SettingsPopup(
+   QWidget*       parent, 
+   const QString &text) : QWidget(parent) 
+{
+   QVBoxLayout* layout = new QVBoxLayout(this);
+
+   effect_    = new QGraphicsOpacityEffect(this);
+   animation_ = new QPropertyAnimation(effect_, "opacity", this);
+
+   // animation
+   animation_->setDuration(250);
+   // effect
+   effect_ = new QGraphicsOpacityEffect(this);
+
+   QLabel* label = new QLabel(text, this);
+   label->setStyleSheet(
+      "background-color: #333333; color: white;   "
+      "padding: 15px 25px; border-radius: 8px;      "
+      "border: 2px solid #02f795; font-size: 13px;"
+   );
+
+   layout->setContentsMargins(0, 0, 0, 0);
+   layout->addWidget(label);
+
+   this->setWindowFlags(Qt::FramelessWindowHint | Qt::SubWindow); 
+   this->setAttribute(Qt::WA_TranslucentBackground);
+   this->setGraphicsEffect(effect_);
+}
+
+void gui::SettingsPopup::Popup(int delay) {
+   QWidget* parent = parentWidget();
+   if (!parent) 
+      return;
+
+   this->adjustSize(); 
+   QSize popupSize = sizeHint();
+
+   QPoint pos = parent->rect().center() - QPoint(popupSize.width() / 2, popupSize.height() / 2);
+   this->move(pos);
+
+   this->raise();
+   this->show();
+
+   animation_->stop();
+   animation_->setStartValue(effect_->opacity());
+   animation_->setEndValue(1.0);
+   animation_->start();
+
+   QTimer::singleShot(delay, this, &SettingsPopup::HideAnimated);
+}
+
+void gui::SettingsPopup::HideAnimated() {
+   animation_->stop();
+   animation_->setStartValue(effect_->opacity());
+   animation_->setEndValue(0.0);
+   
+   disconnect(animation_, &QPropertyAnimation::finished, nullptr, nullptr);
+   
+   connect(
+      animation_, 
+      &QPropertyAnimation::finished, 
+      this, 
+      &SettingsPopup::hide
+   );
+   connect(
+      animation_, 
+      &QPropertyAnimation::finished,
+      this, 
+      &SettingsPopup::deleteLater
+   );
+   
+   animation_->start();
+}
 
 //
 // StatePushButton
@@ -23,10 +103,6 @@ gui::StatePushButton::StatePushButton(QWidget* parent) :
    connect(this, &QPushButton::clicked, this, [this]{
       state_ = !state_;
       UpdateStyle();
-
-      GlobalLogDebug("{}: settings button clicked: {}", 
-         __func__, state_ ? "start" : "stop");
-
       emit Clicked(state_);
    });
 }
@@ -96,11 +172,11 @@ QLayout* gui::ActiveTableNodeData::InitBottomLayout() {
 }
 
 QLayout* gui::ActiveTableNodeData::InitButtons(QLayout* main_layout) {
-   auto* layout     = new QHBoxLayout();
+   auto* layout       = new QHBoxLayout();
 
-   auto* start_stop = new StatePushButton();
-   auto* settings   = new QPushButton(); 
-   auto* logs       = new QPushButton("logs");
+   start_stop_button_ = new StatePushButton();
+   auto* settings     = new QPushButton(); 
+   auto* logs         = new QPushButton("logs");
 
    settings->setIcon(QIcon(GetFileAbsolutePath("/rsrc/settings32.png")));
    settings->setStyleSheet(
@@ -111,23 +187,38 @@ QLayout* gui::ActiveTableNodeData::InitButtons(QLayout* main_layout) {
    
    // EventBus
    connect(settings, &QPushButton::clicked, this, [this]() {
-      GlobalLogDebug("{}: settings button clicked", 
-         __func__);
+      GlobalLogDebug("worder id {}: settings button clicked", 
+         current_worker_index_ + 1
+      );
+
+      auto* popup = new SettingsPopup(
+         this->window(), "coming soon...");
+      popup->Popup(3000); 
+
       std::uint64_t id = label_session_id_->text().toULongLong();
-      emit EVENT_BUS_CALL(ConfigureSession(id));
+      emit EVENT_BUS_CALL(ConfigureSession(current_worker_index_, id));
    });
    connect(logs, &QPushButton::clicked, this, [this]() {
-      GlobalLogDebug("{}: logs button clicked", 
-         __func__);
+      GlobalLogDebug("worker id {}: logs button clicked", 
+         current_worker_index_ + 1
+      );
       std::uint64_t id = label_session_id_->text().toULongLong();
-      emit EVENT_BUS_CALL(ShowTableNodeLogs(id));
+      emit EVENT_BUS_CALL(ShowTableNodeLogs(current_worker_index_, id));
    });
-   connect(start_stop, &StatePushButton::Clicked, [this](bool state) {
+   connect(start_stop_button_, &StatePushButton::Clicked, [this](bool state) {
+      GlobalLogDebug("worker id {}: start/stop button clicked: {}", 
+         current_worker_index_ + 1, state ? "start" : "stop"
+      );
       std::uint64_t id = label_session_id_->text().toULongLong();
-      emit EVENT_BUS_CALL(ToggleClientSender(state, id));
+      emit EVENT_BUS_CALL(ToggleClientSender(current_worker_index_, id, state));
    });
 
-   main_layout->addWidget(start_stop);
+   connect(EVENT_BUS_INSTANCE(), &details::EventBus::WorkerIndexChanged, this,
+   [this](int worker_index) {
+      current_worker_index_ = worker_index;
+   });
+
+   main_layout->addWidget(start_stop_button_);
 
    layout->addWidget(logs);
    layout->addWidget(settings);

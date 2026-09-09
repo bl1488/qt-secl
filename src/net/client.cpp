@@ -1,17 +1,17 @@
 #include "net/client.h"
-#include "include/random.h"
-#include "include/spdlog-wrapper.h"
 #include "net/packet.h"
 #include "net/net-common.h"
+
+#include "include/random.h"
+#include "include/spdlog-wrapper.h"
 
 #include <QTcpSocket>
 #include <QTimer>
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QRandomGenerator>
-#include <qabstractsocket.h>
 
-#define GENERATE_DOUBLE_RANDOM(a, b)\
+#define GENERATE_RANDOM_DOUBLE(a, b)\
    ((a) + ((b) - (a)) * QRandomGenerator::global()->generateDouble())
 
 //
@@ -40,8 +40,8 @@ void net::Sender::StartSending() {
 QByteArray net::Sender::GenerateNetworkMetrics() {
    QJsonObject json;
    json["type"]        = "NetworkMetrics";
-   json["bandwidth"]   = GENERATE_DOUBLE_RANDOM(50.0, 100.0);
-   json["latency"]     = GENERATE_DOUBLE_RANDOM(10.0, 20.0);
+   json["bandwidth"]   = GENERATE_RANDOM_DOUBLE(50.0, 100.0);
+   json["latency"]     = GENERATE_RANDOM_DOUBLE(10.0, 20.0);
    json["packet_loss"] = QRandomGenerator::global()->generateDouble();
 
    return CreatePacket(Packet::Text, json);

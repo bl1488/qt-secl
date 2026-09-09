@@ -87,7 +87,7 @@ void gui::ClientSessionsWidget::InitSessionsTable(QWidget* parent) {
       UpdateTable(rows, cols);
    });
    // update current worker index
-   connect(bottom_panel_, &BottomPanel::WorkerListUpdated, this, 
+   connect(EVENT_BUS_INSTANCE(), &details::EventBus::WorkerIndexChanged, this, 
    [this](int index) { 
       current_worker_index_ = index;
    });

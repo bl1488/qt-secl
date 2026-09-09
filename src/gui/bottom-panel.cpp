@@ -26,7 +26,7 @@ gui::BottomPanel::BottomPanel(QWidget* parent) : QGroupBox(parent) {
    // pages
    pages_->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 
-   // clients counter
+   // total clients counter
    total_clients_->setAlignment(Qt::AlignCenter);
    total_clients_->setContentsMargins(5, 2, 5, 2);
    total_clients_->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
@@ -51,17 +51,6 @@ gui::BottomPanel::BottomPanel(QWidget* parent) : QGroupBox(parent) {
    layout->setAlignment(Qt::AlignLeft | Qt::AlignTop);
    layout->setContentsMargins(10,10,10,10);
 
-   // current worker index
-   connect(
-      workers_list_, 
-      qOverload<int>(&QComboBox::currentIndexChanged), 
-      this, 
-   [this](int index) {
-      GlobalLogDebug("{}: worker index changed: {}",
-         __func__, current_worker_index_);
-      current_worker_index_ = index;
-   });
-
    this->setObjectName("BottomPanelWidget");
    this->setStyleSheet(QString(
       "#BottomPanelWidget {"
@@ -78,11 +67,15 @@ void gui::BottomPanel::InitWorkersInfoWidgets(QGridLayout* layout) {
 
    workers_list_->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 
-   // update current worker index
+   // worker index changed.
+   // emit EventBus signal
    connect(workers_list_, qOverload<int>(&QComboBox::currentIndexChanged), this, 
    [this](int index) {
+      GlobalLogDebug("{}: worker index changed: {}",
+         __func__, current_worker_index_);
       current_worker_index_ = index;
-      emit WorkerListUpdated(index);
+
+      emit EVENT_BUS_CALL(WorkerIndexChanged(current_worker_index_));
    });
 
    workers_info_->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);

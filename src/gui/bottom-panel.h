@@ -36,9 +36,6 @@ signals:
    // out signals
    void SpinboxChanged(int rows, int cols);
 
-   // change global state of ServerWrapper
-   void WorkerListUpdated(int index);
-
 private:
    void UpdatePages();
 

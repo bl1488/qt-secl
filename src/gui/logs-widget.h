@@ -42,6 +42,8 @@ private:
    QComboBox* message_types_;
    QTextEdit* text_;
    QLabel*    session_info_;
+
+   int current_worker_index_ = 0;
 };
 
 } // namespace gui

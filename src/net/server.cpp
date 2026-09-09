@@ -17,6 +17,7 @@ net::Server::Server(int worker_count, QObject* parent) :
 
    connect(this, &Server::RequestServerInfo, this, &Server::OnRequestServerInfo);
 
+   // init workers
    for (int i = 0; i < worker_count; ++i) {
       QThread* thread = new QThread(this);
       Worker*  worker = new Worker(i + 1);
@@ -57,7 +58,7 @@ void net::Server::incomingConnection(qintptr handle) {
    emit worker->AddSession(handle);   
 }
 
-std::size_t net::Server::GetWorkerClientsCount(std::size_t index) const noexcept {
+std::size_t net::Server::GetWorkerSessionsCount(std::size_t index) const noexcept {
    if (qsizetype(index) <= worker_list_.size())
       return worker_list_[index]->GetSessionsCount();
    return std::size_t(~0ull);

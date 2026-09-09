@@ -84,6 +84,16 @@ signals:
    void RequestSessionsSnapshot() const;
    void SessionsSnapshotReady(const QList<ClientInfoData>& list) const;
 
+   // when client receives data the worker processes its ID and signals for EventBus
+   void ActiveSessionLogReady(
+      int                   worker_index,
+      const ClientInfoData& info, 
+      std::uint16_t         type,
+      const QJsonObject&    payload
+   );
+
+   void SetCurrentActiveSession(std::uint64_t id);
+
 private slots:
    void OnAddSession(qintptr handle);
    void OnWrite(std::uint64_t id, std::uint16_t type, const QByteArray& data) const;
@@ -94,6 +104,8 @@ private:
                             sessions_list_;
    std::atomic<std::size_t> sessions_list_counter_{};
    std::uint16_t            worker_id_;
+
+   std::size_t current_active_session_ = 1;
 };
 
 } // namespace net

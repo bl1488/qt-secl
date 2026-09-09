@@ -4,6 +4,8 @@
 #include "net/worker.h"
 #include "net/server.h"
 
+#include "include/spdlog-wrapper.h"
+
 //
 // EventBus
 //
@@ -28,17 +30,36 @@ void gui::details::EventBus::Init(net::Server& server) {
          emit worker->RequestSessionsSnapshot();
    });
 
+   connect(this, &EventBus::ToggleClientSender, this,
+   [this](int worker_index, std::uint64_t id, bool state) {
+      GlobalLogDebug("client sender state: {}", state ? "start" : "stop");
+      Write(
+         worker_index, 
+         id, 
+         state ? net::Packet::Start : net::Packet::Stop, 
+         {}
+      );
+   });
+
+   // foreach worker
    for (int i = 0, j = server_->GetWorkersCount(); i < j; ++i) {
       auto* worker = server_->GetWorker(i);
+      // snapshot
       connect(worker, &net::Worker::SessionsSnapshotReady, this,
       [this, i](const QList<net::ClientInfoData>& list) {
          emit WorkerSnapshotReady(i, list);
       });
+      // logs button
+      connect(this, &EventBus::ShowTableNodeLogs, this, 
+      [worker]([[maybe_unused]] int worker_index, std::uint64_t id) {
+         // change worker active session
+         emit worker->SetCurrentActiveSession(id);
+      });
+      connect(worker, &net::Worker::ActiveSessionLogReady, this, &EventBus::GlobalLogStream);
    }
 }
 
-std::size_t 
-gui::details::EventBus::GetSessionsCount(
+std::size_t gui::details::EventBus::GetSessionsCount(
    int worker_index) const noexcept 
 {
    assert(server_ && worker_index < server_->GetWorkersCount());
